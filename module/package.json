@@ -1,0 +1,9 @@
+{
+  "name": "learn-module",
+  "version": "1.0.0",
+  "description": "learn about the module",
+  "scripts": {
+    "commonjs": "node commonjs/index.js",
+    "amd": "node amd/index.js"
+  }
+}

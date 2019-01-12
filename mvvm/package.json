@@ -1,0 +1,12 @@
+{
+  "name": "mvvm",
+  "version": "1.0.0",
+  "description": "MVVM框架vue/react的简单实现",
+  "main": "index.js",
+  "dependencies": {},
+  "devDependencies": {},
+  "scripts": {
+    "dev:vue": "parcel ./vue/index.html",
+    "build:vue": "parcel build ./vue/index.html"
+  }
+}

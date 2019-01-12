@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Vue MVVM</title>
+  </head>
+  <body>
+    <div id="app">
+      <div class="text">
+        {{ message.a.b }} ←这里是多个表达式节点→ {{ otherMsg }}
+        <p>嵌套节点字段为`otherMsg` 编译为 => {{ otherMsg }}</p>
+      </div>
+      <!-- <div>注释节点</div> -->
+      <ul>
+        <li>li111</li>
+        <li>li222</li>
+      </ul>
+      我是文本节点 <br /><br />
+      <input type="text" v-model="message.a.b" /> <br /><br />
+      <textarea v-model="otherMsg" cols="30" rows="5"></textarea>
+      <div class="test">
+        <h3>v-model test</h3>
+        <input type="text" v-model="test" />
+        <p>test的内容是：{{ test }}</p>
+      </div>
+    </div>
+  </body>
+  <script src="./index.js"></script>
+</html>
