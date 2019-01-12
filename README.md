@@ -4,6 +4,7 @@
 
 > 目录结构如下
 
+```
 ├─module // 模块化实现
 │ ├─amd
 │ └─commonjs
@@ -13,3 +14,4 @@
 │ └─core
 ├─new-call-bind // new、call、bind 方法实现
 └─promise // promise 实现
+```
