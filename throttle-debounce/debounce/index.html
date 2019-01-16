@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>debounce</title>
+  </head>
+
+  <body>
+    <script type="text/javascript">
+      /*
+       * @parms {Function} fn
+       * @parms {Number} delay
+       * @parms {Boolean} immediate 是否立即执行
+       */
+      function debounce(fn, delay, immediate) {
+        let timer;
+        return function() {
+          if (timer) clearTimeout(timer);
+          // 立即执行
+          if (immediate) {
+            let callnow = !timer;
+            callnow && fn.apply(this, arguments);
+            timer = setTimeout(() => {
+              timer = null;
+            }, delay);
+          } else {
+            // 非立即执行
+            timer = setTimeout(() => {
+              fn.apply(this, arguments);
+            }, delay);
+          }
+        };
+      }
+      const handler = () => {
+        console.log('Debounce handler -> ', +new Date());
+      };
+      window.addEventListener('resize', debounce(handler, 2000, true));
+    </script>
+  </body>
+</html>
