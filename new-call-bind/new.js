@@ -21,6 +21,9 @@
 function Person(name, age) {
   this.name = name;
   this.age = age;
+  this.sayHello = function() {
+    console.log('Hello,' + this.name);
+  };
 }
 
 function myNew(P, ...args) {
@@ -33,6 +36,7 @@ function myNew(P, ...args) {
 
 let p1 = myNew(Person, 'yeojongki', 1);
 let p2 = myNew(Person, 'jay', 2);
-console.log(p1.__proto__ === Person.prototype);
-console.log(p2.__proto__ === Person.prototype);
-console.log(p1.__proto__ === p2.__proto__);
+p1.sayHello(); // Hello,yeojongki
+console.log(p1.__proto__ === Person.prototype); // true
+console.log(p2.__proto__ === Person.prototype); // true
+console.log(p1.__proto__ === p2.__proto__); // true
