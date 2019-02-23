@@ -16,6 +16,7 @@
 │  └─vue
 │      └─core
 ├─new-call-bind                      // new、call、bind 方法实现
+├─parse-money                        // 将数字格式化成金额的形式并四舍五入保留x位小数 1234.781->1,234.78
 ├─promise                            // promise 实现
 └─throttle-debounce                  // 防抖、节流实现
     ├─debounce
