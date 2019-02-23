@@ -78,9 +78,9 @@ const parseMoney = (num, len = 2) => {
   let [head, tail] = ('' + scaleBack).split('.')
   // 补零
   function fillZero(num) {
-    let ret = num? num:''
-    for(let i=1; i<len; i++) {
-      ret+='0'
+    let ret = num ? num : ''
+    for (let i = 1; i < len; i++) {
+      ret += '0'
     }
     return ret
   }
@@ -95,7 +95,6 @@ const parseMoney = (num, len = 2) => {
   let prefix = isPosive ? '' : '-'
   return `${prefix}${head}.${tail}`
 }
-
 parseMoney(1234564.789) // 1,234,564.79
 parseMoney(1234564.781) // 1,234,564.78
 parseMoney(1234564.) // 1,234,564.00
