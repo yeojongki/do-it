@@ -5,7 +5,6 @@
 目录结构如下：
 
 ```
-
 ├─event-emitter                      // 发布订阅模式(nodejs event模块)
 ├─instanceof                         // instanceof实现
 ├─module                             // 模块化实现
