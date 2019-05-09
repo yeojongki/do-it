@@ -1,9 +1,12 @@
-# 将数字格式化成金额的形式并四舍五入保留x位小数
+# 将数字格式化成金额的形式并四舍五入保留 x 位小数
 
-## 一. 保留x位小数
-tofix存在的问题： [JavaScript 浮点数陷阱及解法](https://github.com/camsong/blog/issues/9)
+## 一. 保留 x 位小数
 
-另外的办法：Math.round(X * 保留的位数) / 保留的位数
+如： `1234.781` 转化为 `1,234.78`
+tofix 存在的问题： [JavaScript 浮点数陷阱及解法](https://github.com/camsong/blog/issues/9)
+
+另外的办法：Math.round(X \* 保留的位数) / 保留的位数
+
 ```js
 /**
  * 将数字四舍五入保留x位小数
@@ -13,14 +16,15 @@ tofix存在的问题： [JavaScript 浮点数陷阱及解法](https://github.com
  * @example handleTail(100.234, 2) -> 100.23
  */
 const handleTail = (num, len) => {
-   // 扩大相应倍数
+  // 扩大相应倍数
   let scale = Math.pow(10, len)
-   // 再缩小到原来的倍数
+  // 再缩小到原来的倍数
   return Math.round(+num * scale) / scale
 }
 ```
 
 ## 二. 将数字格式化成金额的形式
+
 ```js
 /**
  * 将数字格式化成金额的形式
@@ -41,6 +45,7 @@ const thoudsandNum = num => {
 ```
 
 ## 三. 分割小数整数部分最终合并
+
 ```js
 const parseMoney = (num, len = 2) => {
   // 判断输入合法数字
@@ -48,15 +53,17 @@ const parseMoney = (num, len = 2) => {
     throw new Error('invalid param `num` or `len`')
   }
   // 取出整数和小数部分
-  let [head, tail] = (handleTail(num, len)).split('.')
+  let [head, tail] = handleTail(num, len).split('.')
   // 处理整数千分位
   head = thoudsandNum(head)
   return `${head}.${tail}`
 }
 ```
-另外还需要处理一些问题：没有小数，或者小数尾数不足的时候补0
+
+另外还需要处理一些问题：没有小数，或者小数尾数不足的时候补 0
 
 ## 完整版
+
 ```js
 /**
  * 将数字格式化成金额的形式并四舍五入保留x位小数
@@ -97,7 +104,7 @@ const parseMoney = (num, len = 2) => {
 }
 parseMoney(1234564.789) // 1,234,564.79
 parseMoney(1234564.781) // 1,234,564.78
-parseMoney(1234564.) // 1,234,564.00
+parseMoney(1234564) // 1,234,564.00
 parseMoney(-1234564) // -1,234,564.00
 parseMoney(-1234564.6) // -1,234,564.60
 parseMoney(-1234564.789) // -1,234,564.79
