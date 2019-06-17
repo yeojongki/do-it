@@ -27,6 +27,8 @@ class Router {
 class Router {
   constructor() {
     this.routes = {}
+    this.history = []
+    this.currentIndex = this.history.length - 1
     this.currentUrl = ''
     // 监听事件
     window.addEventListener('load', this.refresh, false)
@@ -34,15 +36,52 @@ class Router {
   }
 
   // 将 path 路径与对应的 callback 函数储存
-  route(path, callback) {
+  addRoute = (path, callback) => {
     this.routes[path] = callback || function() {}
   }
 
-  refresh() {
+  refresh = () => {
     this.currentUrl = location.hash.slice(1) || '/'
+    if (this.isBack) {
+      this.history.pop(this.currentUrl)
+      this.currentIndex--
+    } else {
+      this.currentIndex++
+      this.history.push(this.currentUrl)
+    }
+    console.log(this.routes, this.currentUrl)
     this.routes[this.currentUrl]()
   }
+
+  back = () => {
+    this.isBack = true
+    if (this.currentIndex <= 0) {
+      this.currentIndex = 0
+    } else {
+      this.currentIndex -= 1
+    }
+
+    const url = `${this.history[this.currentIndex]}`
+    location.hash = `#${url}`
+    this.routes[url]()
+  }
+
+  // push = url => {
+  //   this.route
+  // }
 }
+```
+
+### 1.2.3 测试
+
+```js
+const router = new Router()
+router.addRoute('/', () => {
+  console.log(`path: root`)
+})
+router.addRoute('/test', () => {
+  console.log(`path: test`)
+})
 ```
 
 ## history 路由

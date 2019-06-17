@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+
+<body>
+  <ul>
+    <li><a href="#/">go root</a></li>
+    <li><a href="#/test">go test </a></li>
+  </ul>
+  <button id="J_button">back</button>
+  <script>
+    class Router {
+      constructor() {
+        this.routes = {}
+        this.currentUrl = ''
+        this.currentIndex = 0
+        this.history = []
+        // 监听事件
+        window.addEventListener('load', this.refresh, false)
+        window.addEventListener('hashchange', this.refresh, false)
+      }
+
+      // 将 path 路径与对应的 callback 函数储存
+      addRoute = (path, callback) => {
+        this.routes[path] = callback || function () { }
+      }
+
+      // 将 path 路径与对应的 callback 函数储存
+      refresh = () => {
+        this.currentUrl = location.hash.slice(1) || '/'
+        if (this.isBack) {
+          this.history.pop(this.currentUrl)
+          this.currentIndex--
+        } else {
+          this.currentIndex++
+          this.history.push(this.currentUrl)
+        }
+        console.log(this.history, this.currentUrl)
+        this.routes[this.currentUrl]()
+      }
+
+      back = () => {
+        this.isBack = true
+        if (this.currentIndex <= 0) {
+          this.currentIndex = 0
+        } else {
+          this.currentIndex -= 1
+        }
+        const url = `${this.history[this.currentIndex]}`
+        console.log('back', this.currentIndex, url)
+        location.hash = `#${url}`
+        this.routes[url]()
+      }
+    }
+
+    const router = new Router()
+    router.addRoute('/', () => {
+      console.log(`path: root`)
+    })
+    router.addRoute('/test', () => {
+      console.log(`path: test`)
+    })
+    document.querySelector('#J_button').addEventListener('click', () => {
+      console.log(1111)
+      router.back()
+    })
+  </script>
+</body>
+
+</html>
