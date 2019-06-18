@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+
+<body>
+  <ul>
+    <li><a href="/">go root</a></li>
+    <li><a href="/test">go test </a></li>
+    <li><a href="/test2">go test2 </a></li>
+  </ul>
+  <script>
+    class Router {
+      constructor() {
+        this.routes = Object.create(null)
+        window.addEventListener('popstate', function (e) {
+          let state = e.state || {}
+          let { path } = state
+          console.log('path is', path)
+        })
+      }
+
+      // 将 path 路径与对应的 callback 函数储存
+      addRoute = (path, callback) => {
+        this.routes[path] = callback || function () { }
+      }
+
+      // 跳转到某个路由
+      go(path) {
+        history.pushState({ path: path }, null, path);
+        this.routes[path] && this.routes[path]();
+      }
+    }
+
+    const router = new Router()
+    router.addRoute('/', () => {
+      console.log(`path: root`)
+    })
+    router.addRoute('/test', () => {
+      console.log(`path: test`)
+    })
+    router.addRoute('/test2', () => {
+      console.log(`path: test2`)
+    })
+
+    const ul = document.querySelector('ul')
+    ul.addEventListener('click', e => {
+      if (e.target.tagName === 'A') {
+        e.preventDefault()
+        router.go(e.target.getAttribute('href'))
+      }
+    })
+  </script>
+</body>
+
+</html>

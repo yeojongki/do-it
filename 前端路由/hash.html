@@ -12,15 +12,17 @@
   <ul>
     <li><a href="#/">go root</a></li>
     <li><a href="#/test">go test </a></li>
+    <li><a href="#/test2">go test2 </a></li>
   </ul>
   <button id="J_button">back</button>
   <script>
     class Router {
       constructor() {
-        this.routes = {}
+        this.routes = Object.create(null)
         this.currentUrl = ''
-        this.currentIndex = 0
+        this.currentIndex = -1
         this.history = []
+        this.isBack = false
         // 监听事件
         window.addEventListener('load', this.refresh, false)
         window.addEventListener('hashchange', this.refresh, false)
@@ -36,12 +38,13 @@
         this.currentUrl = location.hash.slice(1) || '/'
         if (this.isBack) {
           this.history.pop(this.currentUrl)
-          this.currentIndex--
+          if (this.currentIndex > 0) {
+            this.currentIndex--
+          }
         } else {
           this.currentIndex++
           this.history.push(this.currentUrl)
         }
-        console.log(this.history, this.currentUrl)
         this.routes[this.currentUrl]()
       }
 
@@ -52,10 +55,13 @@
         } else {
           this.currentIndex -= 1
         }
-        const url = `${this.history[this.currentIndex]}`
-        console.log('back', this.currentIndex, url)
-        location.hash = `#${url}`
-        this.routes[url]()
+        if (this.history.length) {
+          const url = `${this.history[this.currentIndex]}`
+          if (url) {
+            location.hash = `#${url}`
+            this.routes[url]()
+          }
+        }
       }
     }
 
@@ -66,10 +72,10 @@
     router.addRoute('/test', () => {
       console.log(`path: test`)
     })
-    document.querySelector('#J_button').addEventListener('click', () => {
-      console.log(1111)
-      router.back()
+    router.addRoute('/test2', () => {
+      console.log(`path: test2`)
     })
+    document.querySelector('#J_button').addEventListener('click', router.back)
   </script>
 </body>
 
